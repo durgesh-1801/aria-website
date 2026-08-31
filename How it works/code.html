@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>How ARIA Works</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Glacial+Indifference:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#333031",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#c8c6c3",
+                        "inverse-primary": "#95464e",
+                        "surface-dim": "#151314",
+                        "primary-fixed-dim": "#ffb2b8",
+                        "on-secondary-fixed-variant": "#72333b",
+                        "surface-container-highest": "#373435",
+                        "secondary-fixed-dim": "#ffb2b9",
+                        "on-tertiary-fixed": "#1c1c1a",
+                        "on-primary-fixed-variant": "#772f38",
+                        "on-tertiary-fixed-variant": "#474745",
+                        "on-secondary-container": "#f7a1a9",
+                        "on-surface": "#e7e1e2",
+                        "on-surface-variant": "#d9c1c1",
+                        "surface-container-high": "#2c292a",
+                        "error": "#ffb4ab",
+                        "inverse-surface": "#e7e1e2",
+                        "on-primary-fixed": "#3e030f",
+                        "error-container": "#93000a",
+                        "surface-container": "#211f20",
+                        "surface-tint": "#ffb2b8",
+                        "on-tertiary-container": "#9b9a97",
+                        "on-error": "#690005",
+                        "tertiary-container": "#323230",
+                        "surface-bright": "#3b3839",
+                        "secondary-fixed": "#ffdadb",
+                        "outline": "#a18c8c",
+                        "surface-container-lowest": "#100e0f",
+                        "on-secondary-fixed": "#3b0812",
+                        "outline-variant": "#544343",
+                        "primary": "#ffb2b8",
+                        "on-background": "#e7e1e2",
+                        "on-secondary": "#561d25",
+                        "primary-fixed": "#ffdadb",
+                        "background": "#151314",
+                        "surface-container-low": "#1d1b1c",
+                        "primary-container": "#5c1a24",
+                        "surface-variant": "#373435",
+                        "surface": "#151314",
+                        "secondary": "#ffb2b9",
+                        "tertiary-fixed-dim": "#c8c6c3",
+                        "on-primary": "#5a1923",
+                        "on-primary-container": "#dc7f87",
+                        "secondary-container": "#75353d",
+                        "on-tertiary": "#31302f",
+                        "tertiary-fixed": "#e5e2df",
+                        "cream": "#F8F5F2",
+                        "burgundy-light": "#7A2B37",
+                        "burgundy-deep": "#3A0E15",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "12px",
+                        "base": "8px",
+                        "gutter": "24px",
+                        "container-margin-mobile": "20px",
+                        "stack-md": "24px",
+                        "stack-lg": "48px",
+                        "container-margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Poppins"],
+                        "body-lg": ["Poppins"],
+                        "body-md": ["Poppins"],
+                        "headline-lg-mobile": ["Poppins"],
+                        "headline-md": ["Glacial Indifference"],
+                        "display-hero": ["Poppins"],
+                        "label-sm": ["Poppins"],
+                        "label-caps": ["Glacial Indifference"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "display-hero": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Poppins', sans-serif; background-color: #F8F5F2; color: #151314; }
+        .font-glacial { font-family: 'Glacial Indifference', sans-serif; }
+        
+        .signal-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .dark .bg-cream-override { background-color: #F8F5F2 !important; color: #151314 !important; }
+        .dark .text-cream-override { color: #F8F5F2 !important; }
+    </style>
+</head>
+<body class="antialiased dark:bg-background dark:text-on-background selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center max-w-7xl mx-auto px-container-margin-desktop py-4 hidden md:flex">
+<div class="flex items-center gap-2"><img alt="ARIA Shield Logo" class="w-auto h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxMcS03ssV6R1hNr5iqqttteDJFOR0l-yIN1w5K_5RJI9hjq4-OSWjuzTikW5NmsQ23ybUYtvaOOn4_wULGLiLpBSICD1DMXMvXL0cuYCZiIaN6EJzHmDUBKsO1FS4i-B5uXFKWUSj7tAjeyuFyvptr_6JcsC1LcwmVeDz_shvPDTmPuEHkd8X7X8WZjcrBrZXBVyQ5-0g3y0JdLJ1Qe-eNZiFIQ2SALZ6UAc3Z5sl39R31CFgVdKmfIon-LDRRkpJvA"/><span class="font-headline-md text-headline-md font-bold text-white tracking-widest">ARIA</span></div>
+<ul class="flex items-center gap-8 font-label-caps text-label-caps"><li class="text-white">Home</li><li class=""><a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">How It Works</a></li><li class="text-white">Privacy &amp; Safety</li><li class="text-white">Trust &amp; Recognition</li><li class="text-white">About Us</li></ul>
+<button class="bg-primary-container text-cream px-6 py-2 rounded font-label-caps hover:bg-burgundy-light transition-colors">Partner With Us</button>
+</nav>
+<!-- Page Header -->
+<section class="bg-cream-override pt-32 pb-24 px-container-margin-desktop text-center">
+<div class="max-w-4xl mx-auto">
+<span class="font-label-caps text-label-caps tracking-[0.2em] text-primary-container mb-6 block">THE TECHNOLOGY</span>
+<h1 class="font-display-hero text-display-hero text-[#151314] mb-8">How ARIA Works</h1>
+<p class="font-glacial text-2xl leading-relaxed text-inverse-on-surface max-w-3xl mx-auto">
+                ARIA continuously reads multiple real-time signals, fuses them into a single risk picture, and decides in seconds whether and how to act
+            </p>
+</div>
+</section>
+<!-- Signal Fusion Diagram (Conceptual) -->
+<section class="bg-cream-override px-container-margin-desktop">
+<div class="mx-auto flex flex-col md:flex-row items-center justify-between gap-12"><div class="w-full flex justify-center items-center"><img alt="ARIA's Comprehensive Safety System" class="w-full h-auto rounded-lg shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtlry3XnbH_dq9GqtX6OJv1Y7Oqf7SXhSyhBHJA6F5SjjVf9xtYqHiszAl5bfE657YjxLIUOoi29olkc3tgNdzEQqxifWrQPeKHp0Rr788LvdX7GbIipiudALc2cvnfHp3_v-TRvVggGL0wiTXu2eQI8mlw0aSBNFWfLXZrwqhJ2ohzdi0HIf6TzhgM96mh1kIOnkPrRk2vcDYS_Vq3yZbZ-NcDIA7DLNjGChPidcwLnC5XJjYbaw3DIwTKRy-f7AN3A"/></div></div>
+</section>
+<!-- Signal Explainer Cards -->
+<section class="bg-cream-override py-24 px-container-margin-desktop">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="bg-white p-8 rounded border border-outline/20 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">graphic_eq</span>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-4">Voice Analysis</h4>
+<p class="font-glacial text-inverse-on-surface">Detects stress levels, sudden shouts, and specific keywords to gauge immediate danger.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-8 rounded border border-outline/20 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">directions_run</span>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-4">Motion Detection</h4>
+<p class="font-glacial text-inverse-on-surface">Identifies abrupt movements, running, or unusual pacing associated with panic or struggle.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-8 rounded border border-outline/20 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">360</span>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-4">Rotation Detection</h4>
+<p class="font-glacial text-inverse-on-surface">Monitors device orientation to identify drops, falls, or sudden physical impacts.</p>
+</div>
+<!-- Card 4 -->
+<div class="bg-white p-8 rounded border border-outline/20 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">radar</span>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-4">Contextual Signals</h4>
+<p class="font-glacial text-inverse-on-surface">Analyzes location changes, time of day, and environmental noise to establish a baseline of safety.</p>
+</div>
+<!-- Card 5 -->
+<div class="bg-white p-8 rounded border border-outline/20 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">hub</span>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-4">Risk Fusion</h4>
+<p class="font-glacial text-inverse-on-surface">Combines all sensory inputs into a cohesive risk matrix in real-time, eliminating false positives.</p>
+</div>
+<!-- Card 6 -->
+<div class="bg-white p-8 rounded border border-outline/20 shadow-sm hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-6">gavel</span>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-4">Decision Engine</h4>
+<p class="font-glacial text-inverse-on-surface">Autonomously determines the appropriate level of intervention, from silent alerts to emergency dispatch.</p>
+</div>
+</div>
+</section>
+<!-- From Signal to Action Bridge -->
+<section class="bg-cream-override py-16 px-container-margin-desktop border-y border-outline/10">
+<div class="max-w-4xl mx-auto text-center">
+<h2 class="font-headline-lg text-headline-lg text-[#151314] mb-6">From Signals to a Decision — In Seconds</h2>
+<p class="font-glacial text-lg text-inverse-on-surface mb-12">The raw data captured by our sensors undergoes immediate processing through our five-stage intelligent workflow.</p>
+<div class="flex flex-wrap justify-center items-center gap-4 text-primary-container font-label-caps">
+<span class="bg-white px-4 py-2 rounded-full border border-primary-container/20 shadow-sm">Detect</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="bg-white px-4 py-2 rounded-full border border-primary-container/20 shadow-sm">Understand</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="bg-white px-4 py-2 rounded-full border border-primary-container/20 shadow-sm">Assess</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="bg-white px-4 py-2 rounded-full border border-primary-container/20 shadow-sm">Alert</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span class="bg-white px-4 py-2 rounded-full border border-primary-container/20 shadow-sm">Assist</span>
+</div>
+</div>
+</section>
+<!-- Use Cases -->
+<section class="bg-cream-override py-24 px-container-margin-desktop">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-[#151314] mb-12 text-center">Built for Every Scenario</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Use Case 1 -->
+<div class="bg-white p-8 rounded-lg border border-outline/10 shadow-sm flex items-start gap-6">
+<div class="bg-primary-container/10 p-4 rounded-full">
+<span class="material-symbols-outlined text-primary-container text-3xl">person</span>
+</div>
+<div>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-3">Personal Safety</h4>
+<p class="font-glacial text-inverse-on-surface">Empowering individuals walking alone at night or in unfamiliar areas. ARIA acts as an invisible companion, ready to intervene before a threat escalates.</p>
+</div>
+</div>
+<!-- Use Case 2 -->
+<div class="bg-white p-8 rounded-lg border border-outline/10 shadow-sm flex items-start gap-6">
+<div class="bg-primary-container/10 p-4 rounded-full">
+<span class="material-symbols-outlined text-primary-container text-3xl">school</span>
+</div>
+<div>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-3">Campus/Institutions</h4>
+<p class="font-glacial text-inverse-on-surface">Integrating with campus security to provide students with discreet, immediate access to help, streamlining dispatch without the need for blue light boxes.</p>
+</div>
+</div>
+<!-- Use Case 3 -->
+<div class="bg-white p-8 rounded-lg border border-outline/10 shadow-sm flex items-start gap-6">
+<div class="bg-primary-container/10 p-4 rounded-full">
+<span class="material-symbols-outlined text-primary-container text-3xl">business</span>
+</div>
+<div>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-3">Organizations</h4>
+<p class="font-glacial text-inverse-on-surface">Protecting lone workers and staff in high-risk environments. Ensure compliance and rapid response with automated incident reporting.</p>
+</div>
+</div>
+<!-- Use Case 4 -->
+<div class="bg-white p-8 rounded-lg border border-outline/10 shadow-sm flex items-start gap-6">
+<div class="bg-primary-container/10 p-4 rounded-full">
+<span class="material-symbols-outlined text-primary-container text-3xl">local_police</span>
+</div>
+<div>
+<h4 class="font-headline-md text-2xl text-[#151314] mb-3">Public Safety Ecosystems</h4>
+<p class="font-glacial text-inverse-on-surface">Feeding high-fidelity, contextual data directly into 911 dispatch centers to prioritize responses and improve situational awareness for first responders.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust/Reassurance Strip -->
+<section class="bg-[#0C0A0B] py-6 px-container-margin-desktop text-center">
+<a class="inline-flex items-center gap-2 text-cream hover:text-primary transition-colors font-label-caps" href="#">
+            Read our Technical Overview <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</section>
+<!-- Final CTA -->
+<section class="bg-surface-container-lowest py-24 px-container-margin-desktop text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary-container/10 via-background to-background"></div>
+<div class="max-w-3xl mx-auto relative z-10">
+<h2 class="font-headline-lg text-headline-lg text-cream mb-8">Help Us Build the Future of Emergency Response</h2>
+<div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+<button class="bg-primary-container text-cream px-8 py-3 rounded font-label-caps hover:bg-burgundy-light transition-colors w-full sm:w-auto">Partner With Us</button>
+<a class="text-primary hover:text-cream transition-colors font-label-caps border-b border-primary hover:border-cream pb-1" href="#">Contact the Team</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant w-full flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-container-margin-desktop py-stack-lg">
+<div class="flex flex-col items-center md:items-start mb-8 md:mb-0">
+<span class="font-headline-md text-headline-md text-primary dark:text-primary mb-2">ARIA</span>
+<span class="font-body-md text-body-md text-on-surface-variant">© 2026 ARIA Safety Intelligence. All rights reserved.</span>
+</div>
+<ul class="flex flex-wrap justify-center gap-6 font-label-caps text-label-caps mb-8 md:mb-0">
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Home</a></li>
+<li class=""><a class="text-primary hover:text-primary transition-colors duration-200" href="#">How It Works</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Features</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Trust</a></li>
+<li class=""><a class="text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Contact</a></li>
+</ul>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">mail</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors">share</span>
+</div>
+</footer>
+</body></html>

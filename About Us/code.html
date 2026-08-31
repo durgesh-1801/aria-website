@@ -1,0 +1,276 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>About ARIA - ARIA Safety Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Glacial+Indifference:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-container": "#323230",
+                        "primary": "#ffb2b8",
+                        "on-tertiary-fixed-variant": "#474745",
+                        "primary-fixed-dim": "#ffb2b8",
+                        "background": "#151314",
+                        "secondary-fixed": "#ffdadb",
+                        "primary-fixed": "#ffdadb",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#1d1b1c",
+                        "tertiary": "#c8c6c3",
+                        "outline": "#a18c8c",
+                        "surface-tint": "#ffb2b8",
+                        "surface-bright": "#3b3839",
+                        "secondary-container": "#75353d",
+                        "surface": "#151314",
+                        "on-primary-fixed-variant": "#772f38",
+                        "on-surface-variant": "#d9c1c1",
+                        "on-secondary-fixed": "#3b0812",
+                        "surface-container": "#211f20",
+                        "primary-container": "#5c1a24",
+                        "secondary-fixed-dim": "#ffb2b9",
+                        "on-primary": "#5a1923",
+                        "surface-container-high": "#2c292a",
+                        "on-tertiary-fixed": "#1c1c1a",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#c8c6c3",
+                        "on-primary-container": "#dc7f87",
+                        "tertiary-fixed": "#e5e2df",
+                        "surface-container-highest": "#373435",
+                        "surface-container-lowest": "#100e0f",
+                        "surface-variant": "#373435",
+                        "on-secondary-fixed-variant": "#72333b",
+                        "inverse-surface": "#e7e1e2",
+                        "error-container": "#93000a",
+                        "inverse-on-surface": "#333031",
+                        "on-background": "#e7e1e2",
+                        "on-tertiary": "#31302f",
+                        "outline-variant": "#544343",
+                        "on-secondary": "#561d25",
+                        "on-secondary-container": "#f7a1a9",
+                        "inverse-primary": "#95464e",
+                        "on-primary-fixed": "#3e030f",
+                        "on-surface": "#e7e1e2",
+                        "on-tertiary-container": "#9b9a97",
+                        "surface-dim": "#151314",
+                        "error": "#ffb4ab",
+                        "secondary": "#ffb2b9"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "stack-sm": "12px",
+                        "container-margin-mobile": "20px",
+                        "base": "8px",
+                        "stack-lg": "48px",
+                        "container-margin-desktop": "40px",
+                        "gutter": "24px",
+                        "stack-md": "24px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Poppins"],
+                        "headline-lg-mobile": ["Poppins"],
+                        "label-sm": ["Poppins"],
+                        "label-caps": ["Glacial Indifference"],
+                        "body-md": ["Poppins"],
+                        "display-hero": ["Poppins"],
+                        "headline-lg": ["Poppins"],
+                        "headline-md": ["Glacial Indifference"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-caps": ["14px", { "lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-hero": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "0.05em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .custom-cream-bg { background-color: #F2EDE9; }
+        .custom-cream-text { color: #F2EDE9; }
+        .custom-near-black-bg { background-color: #0C0A0B; }
+        .custom-burgundy-text { color: #5C1A24; }
+        .custom-burgundy-bg { background-color: #5C1A24; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 bg-background dark:bg-background border-b border-outline-variant transition-colors duration-300">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-container-margin-desktop py-4 md:px-container-margin-desktop px-container-margin-mobile">
+<a class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity" href="#"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiKq9BUXisOY3kJ7pMYSsRKncCHLZr7JpVXe_4UkF51uAuoCP37vrUMu7Zhmc4p6ZYXu1VrNLeeX-dcNO_p-9ZDUSAAU13XIDxBA6Mhs3rKDsbAzZdYvt2KRENKmzc9eAB7RCH8o5z_FbR1oBGr0VDNq1TP4KKCL05HHhqOrziTVeCHDL8pGxsj_TgCnRXn6WE_bGhaSynkeIO-I0CTGyJTffpImRKc2LaY4KDWw99XE6BJe3dPQziOND5hjzYog68gg" alt="ARIA Logo" class="h-8 w-auto inline-block mr-2"><span class="text-white">ARIA</span></a>
+<nav class="hidden md:flex items-center gap-gutter">
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">How It Works</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Privacy &amp; Safety</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Trust &amp; Recognition</a>
+<a class="font-label-caps text-label-caps text-primary font-bold border-b-2 border-primary pb-1 active:scale-95 transition-transform" href="#">About Us</a>
+
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:inline-flex items-center justify-center font-label-caps text-label-caps bg-primary-container text-inverse-surface px-6 py-2 rounded hover:bg-primary-container/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background active:scale-95">
+                    Partner With Us
+                </button>
+<button aria-label="Open Menu" class="md:hidden text-primary focus:outline-none">
+<span class="material-symbols-outlined" style="font-size: 28px;">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Page Header -->
+<section class="custom-cream-bg text-surface-container-lowest py-20 px-container-margin-mobile md:px-container-margin-desktop">
+<div class="max-w-4xl mx-auto space-y-stack-md text-center">
+<h1 class="font-display-hero text-display-hero md:text-5xl text-4xl mb-6">Building safety that doesn't wait for you to ask for help.</h1>
+<p class="font-body-lg text-body-lg md:text-xl text-lg text-surface-container-highest max-w-3xl mx-auto mb-4">
+                    ARIA exists to address a simple but important gap in personal safety: in a real emergency, a person may not always have the time, ability, or opportunity to manually press an SOS button.
+                </p>
+<p class="font-body-lg text-body-lg md:text-xl text-lg text-surface-container-highest max-w-3xl mx-auto">
+                    We are building ARIA as an AI-powered personal safety platform that can identify potential emergency situations using signals such as voice, movement, and contextual information, and help initiate an appropriate response.
+                </p>
+</div>
+</section>
+<!-- Our Journey -->
+<section class="custom-near-black-bg py-24 px-container-margin-mobile md:px-container-margin-desktop border-y border-surface-variant relative overflow-hidden">
+<!-- Ambient subtle highlight -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/2 bg-primary-container opacity-5 blur-[100px] rounded-full pointer-events-none"></div>
+<div class="max-w-6xl mx-auto relative z-10">
+<div class="mb-16 max-w-3xl">
+<h2 class="font-headline-lg text-headline-lg md:text-headline-lg text-headline-lg-mobile text-primary mb-6">Our Journey</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                        ARIA started as an idea focused on making emergency assistance more accessible and responsive. From the initial concept, we progressed to building an MVP, participating in innovation programs and competitions, and validating the idea through practical development.
+                    </p>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        We are currently in the experimental/MVP stage, working toward pilot deployment and further real-world validation.
+                    </p>
+</div>
+<!-- Timeline -->
+<div class="relative pt-10 pb-4">
+<div class="hidden md:block absolute top-1/2 left-0 w-full h-px bg-surface-variant -translate-y-1/2 z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4 relative z-10">
+<!-- Step 1 -->
+<div class="flex flex-row md:flex-col items-center md:items-start gap-4">
+<div class="w-4 h-4 rounded-full bg-surface-variant shrink-0 relative md:ml-4">
+<div class="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 w-px h-6 bg-surface-variant"></div>
+</div>
+<div class="flex-1 md:text-left">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1 opacity-70">Phase 1</span>
+<h3 class="font-body-lg text-body-lg text-inverse-surface font-medium">Idea</h3>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-row md:flex-col items-center md:items-start gap-4">
+<div class="w-4 h-4 rounded-full bg-surface-variant shrink-0 relative md:ml-4">
+<div class="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 w-px h-6 bg-surface-variant"></div>
+</div>
+<div class="flex-1 md:text-left">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1 opacity-70">Phase 2</span>
+<h3 class="font-body-lg text-body-lg text-inverse-surface font-medium">MVP Build</h3>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-row md:flex-col items-center md:items-start gap-4">
+<div class="w-4 h-4 rounded-full bg-surface-variant shrink-0 relative md:ml-4">
+<div class="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 w-px h-6 bg-surface-variant"></div>
+</div>
+<div class="flex-1 md:text-left">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1 opacity-70">Phase 3</span>
+<h3 class="font-body-lg text-body-lg text-inverse-surface font-medium">Innovation Programs &amp; Competitions</h3>
+</div>
+</div>
+<!-- Step 4 (Current) -->
+<div class="flex flex-row md:flex-col items-center md:items-start gap-4 relative">
+<!-- Highlight glow -->
+<div class="absolute -inset-4 bg-primary-container/20 blur-xl rounded-full z-0 md:hidden"></div>
+<div class="w-6 h-6 rounded-full custom-burgundy-bg shrink-0 relative md:ml-3 z-10 flex items-center justify-center ring-4 ring-background">
+<div class="w-2 h-2 bg-inverse-surface rounded-full"></div>
+<div class="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 w-px h-5 custom-burgundy-bg"></div>
+</div>
+<div class="flex-1 md:text-left z-10 p-4 md:p-0 bg-surface-container-low md:bg-transparent rounded-lg border border-primary-container/30 md:border-none shadow-lg md:shadow-none">
+<span class="font-label-caps text-label-caps text-primary block mb-1">Current Stage</span>
+<h3 class="font-body-lg text-body-lg text-primary-fixed font-semibold">Pilot Deployment (in progress)</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The Founders -->
+<section class="custom-cream-bg text-surface-container-lowest py-24 px-container-margin-mobile md:px-container-margin-desktop">
+<div class="max-w-6xl mx-auto text-center">
+<h2 class="font-headline-lg text-headline-lg md:text-headline-lg text-headline-lg-mobile text-surface-container-lowest mb-2">The Founders</h2>
+<p class="font-body-md text-body-md text-surface-container-highest mb-12">ARIA is being built by:</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 mb-12">
+<!-- Founder 1 -->
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 rounded-full custom-burgundy-bg text-inverse-surface flex items-center justify-center font-display-hero text-3xl mb-4 shadow-md">
+                            DS
+                        </div>
+<h3 class="font-body-lg text-body-lg font-semibold">Durgesh Sharma</h3>
+</div>
+<!-- Founder 2 -->
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 rounded-full custom-burgundy-bg text-inverse-surface flex items-center justify-center font-display-hero text-3xl mb-4 shadow-md">
+                            AS
+                        </div>
+<h3 class="font-body-lg text-body-lg font-semibold">Anushka Singh</h3>
+</div>
+<!-- Founder 3 -->
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 rounded-full custom-burgundy-bg text-inverse-surface flex items-center justify-center font-display-hero text-3xl mb-4 shadow-md">
+                            KR
+                        </div>
+<h3 class="font-body-lg text-body-lg font-semibold">Khushi Rathore</h3>
+</div>
+<!-- Founder 4 -->
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 rounded-full custom-burgundy-bg text-inverse-surface flex items-center justify-center font-display-hero text-3xl mb-4 shadow-md">
+                            KH
+                        </div>
+<h3 class="font-body-lg text-body-lg font-semibold">Kaustav Halder</h3>
+</div>
+</div>
+<p class="font-body-md text-body-md text-surface-container-highest max-w-2xl mx-auto italic">
+                    "We are a student-led founding team combining interests in technology, AI, product development, and entrepreneurship."
+                </p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-container-margin-desktop py-stack-lg gap-8 md:gap-0">
+<div class="flex flex-col items-center md:items-start gap-4">
+<span class="font-headline-md text-headline-md text-primary dark:text-primary tracking-widest font-bold">ARIA</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-sm text-center md:text-left">
+                    © 2026 ARIA Safety Intelligence. All rights reserved.
+                </span>
+</div>
+<nav class="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-4">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">How It Works</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Features</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Trust</a>
+<a class="font-label-caps text-label-caps text-primary hover:text-primary transition-colors duration-200" href="#">Contact</a>
+</nav>
+</div>
+</footer>
+
+
+
+
+
+
+</body></html>
