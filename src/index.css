@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #151314;
+    color: #e7e1e2;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Hero gradient pattern from Home page */
+.hero-pattern {
+  background-image: radial-gradient(circle at center, rgba(92, 26, 36, 0.15) 0%, transparent 70%);
+}
+
+/* Glass card effect from Home page */
+.glass-card {
+  background: rgba(26, 23, 24, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(84, 67, 67, 0.3);
+}
+
+/* Custom color utility classes from About Us page */
+.custom-cream-bg { background-color: #F2EDE9; }
+.custom-cream-text { color: #F2EDE9; }
+.custom-near-black-bg { background-color: #0C0A0B; }
+.custom-burgundy-text { color: #5C1A24; }
+.custom-burgundy-bg { background-color: #5C1A24; }
+
+/* Custom color utility classes from Trust & Recognition & How It Works pages */
+.bg-cream { background-color: #F8F5F2; }
+.text-cream { color: #F8F5F2; }
+.bg-warm-gray { background-color: #EFEBE7; }
+.text-burgundy { color: #5C1A24; }
+.bg-burgundy { background-color: #5C1A24; }
+.border-burgundy { border-color: #5C1A24; }
+
+.dark .bg-cream-override { background-color: #F8F5F2 !important; color: #151314 !important; }
+.dark .text-cream-override { color: #F8F5F2 !important; }
+
+/* Animated signal line from How It Works page */
+.signal-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 3s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Material Symbols Outlined settings */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
