@@ -40,8 +40,16 @@
 .bg-burgundy { background-color: #5C1A24; }
 .border-burgundy { border-color: #5C1A24; }
 
-.dark .bg-cream-override { background-color: #F8F5F2 !important; color: #151314 !important; }
-.dark .text-cream-override { color: #F8F5F2 !important; }
+/* bg-cream-override: light background in light mode, dark background in dark mode.
+   Fix #15: Removed !important so dark mode Tailwind classes can override correctly. */
+.bg-cream-section {
+  background-color: #F8F5F2;
+  color: #151314;
+}
+.dark .bg-cream-section {
+  background-color: #151314;
+  color: #e7e1e2;
+}
 
 /* Animated signal line from How It Works page */
 .signal-line {

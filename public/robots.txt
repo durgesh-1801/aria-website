@@ -1,0 +1,13 @@
+# robots.txt for ARIA Safety Platform
+# https://www.robotstxt.org/robotstxt.html
+#
+# TODO: Replace https://aria-safety.tech with your final production domain.
+
+User-agent: *
+Allow: /
+
+# Block non-public pages if any are added in future
+# Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://aria-safety.tech/sitemap.xml

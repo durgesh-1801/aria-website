@@ -1,27 +1,42 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+
+const navLinks = [
+  { name: 'Home', path: '/' },
+  { name: 'How It Works', path: '/how-it-works' },
+  { name: 'Privacy & Safety', path: '/privacy-and-safety' },
+  { name: 'Trust & Recognition', path: '/trust-and-recognition' },
+  { name: 'About Us', path: '/about' },
+];
 
 export const MobileNavDrawer: React.FC = () => {
   const { isMobileMenuOpen, closeMobileMenu } = useApp();
-  const location = useLocation();
+
+  // Accessibility: Lock background scroll and close on Escape key when drawer is open
+  React.useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMobileMenu();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isMobileMenuOpen, closeMobileMenu]);
 
   if (!isMobileMenuOpen) return null;
 
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'How It Works', path: '/how-it-works' },
-    { name: 'Privacy & Safety', path: '/privacy-and-safety' },
-    { name: 'Trust & Recognition', path: '/trust-and-recognition' },
-    { name: 'About Us', path: '/about' },
-  ];
-
   return (
-    <div className="fixed inset-0 z-[100] md:hidden">
+    <div className="fixed inset-0 z-[100] md:hidden" role="dialog" aria-modal="true" aria-label="Navigation menu">
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
         onClick={closeMobileMenu}
+        aria-hidden="true"
       />
 
       {/* Drawer */}
@@ -29,37 +44,44 @@ export const MobileNavDrawer: React.FC = () => {
         <div>
           {/* Header */}
           <div className="flex justify-between items-center pb-6 border-b border-outline-variant/20">
-            <Link to="/" onClick={closeMobileMenu} className="flex items-center gap-2">
+            <Link to="/" onClick={closeMobileMenu} className="flex items-center gap-2" aria-label="ARIA Home">
+              <img
+                src="/images/logo/aria-logo.png"
+                alt="ARIA Logo"
+                className="h-8 w-auto"
+                width="80"
+                height="32"
+              />
               <span className="font-headline-md text-headline-md font-bold text-white tracking-widest">ARIA</span>
             </Link>
-            <button 
-              onClick={closeMobileMenu} 
-              aria-label="Close menu"
-              className="text-on-surface-variant hover:text-white p-2"
+            <button
+              onClick={closeMobileMenu}
+              aria-label="Close navigation menu"
+              className="text-on-surface-variant hover:text-white p-2 focus:outline-none focus:ring-2 focus:ring-primary rounded"
             >
-              <span className="material-symbols-outlined">close</span>
+              <span className="material-symbols-outlined" aria-hidden="true">close</span>
             </button>
           </div>
 
-          {/* Links */}
-          <nav className="flex flex-col gap-4 mt-8">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
-              return (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={closeMobileMenu}
-                  className={`font-label-caps text-label-caps uppercase tracking-wider py-2 transition-colors ${
-                    isActive 
-                      ? 'text-primary font-bold border-l-2 border-primary pl-3' 
+          {/* Links — Fix #14: Uses NavLink for dynamic active state */}
+          <nav className="flex flex-col gap-4 mt-8" aria-label="Mobile navigation">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                end={link.path === '/'}
+                onClick={closeMobileMenu}
+                className={({ isActive }) =>
+                  `font-label-caps text-label-caps uppercase tracking-wider py-2 transition-colors duration-200 ${
+                    isActive
+                      ? 'text-primary font-bold border-l-2 border-primary pl-3'
                       : 'text-white hover:text-primary pl-3'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
+                  }`
+                }
+              >
+                {link.name}
+              </NavLink>
+            ))}
           </nav>
         </div>
 
@@ -68,7 +90,7 @@ export const MobileNavDrawer: React.FC = () => {
           <Link
             to="/partner-with-us"
             onClick={closeMobileMenu}
-            className="block text-center bg-primary-container text-on-surface py-3 px-6 rounded font-label-caps text-label-caps hover:opacity-90 transition-all w-full"
+            className="block text-center bg-primary-container text-on-surface py-3 px-6 rounded font-label-caps text-label-caps hover:opacity-90 transition-all w-full focus:outline-none focus:ring-2 focus:ring-primary"
           >
             Partner With Us
           </Link>
